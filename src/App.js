@@ -2,47 +2,83 @@ import "./App.css";
 import Input from "./Component/Input";
 import Button from "./Component/Button";
 import { useState } from "react";
-// import DetailExpence from "./Component/DetailExpence";
+import DetailExpence from "./Component/DetailExpence";
 
 function App() {
   const [display, setDisplay] = useState(false);
   const [displayExpense, setDisplayExpense] = useState(false);
-  const [amount, setAmount] = useState()
 
-
-  const [values, setValues] = useState([
-    {
-      title: "",
-      amount: "",
-      date: "",
-    },
-  ]);
+  const [title, setTitle] = useState("");
+  const [amount, setAmount] = useState("");
+  const [date, setDate] = useState("");
+  const [newExpense, setNewExpense] = useState([]);
 
   const handleClick = () => {
     setDisplay(!display);
   };
 
-  const handleSubmitExpDisplay = (e) => {
-    setValues({
-      ...values,
-      [e.target.name]: e.target.value,
-    });
-  };
-
   const handleSubmitExpense = () => {
-      
-  };
-  const handleNumChange = (event) => {
-    const limit = 15;
-    setAmount(event.target.value.slice(0, limit));
+
+    
+
+    setDisplayExpense(!displayExpense);
+    
   };
 
-  const submitHandle = e => {
-    e.preventDefault()
+
+  const submitData = (e) => {
+   
+    e.preventDefault();
+    if(title === '' || amount === '' || date === ''){
+      alert("Please enter full information")
+      return
+    }
+    const newData = { title, amount, date };
+
+   
+
+    
+    setTitle("");
+    setAmount("");
+    setDate("");
+
+    setNewExpense([...newExpense, newData]);
+    console.log(newExpense)
+  };
+
+  const stringMonth = (date) => {
+    var month = ''
+      switch(date){
+        case '01': month = "January";
+            break;
+        case '02': month = "February";
+            break;
+        case '03': month = "March";
+            break;
+        case '04': month = "April";
+            break;
+        case '05': month = "May";
+            break;
+        case '06': month = "June"; 
+            break;
+        case '07': month = "July";
+            break;
+        case '08': month = "August";
+            break;
+        case '09': month = "September";
+            break;
+        case '10': month = "October";
+            break;
+        case '11': month = "November";
+            break;
+        case '12': month = "December";
+            break;
+      }
+      return month;
   }
-
+  
   return (
-    <div className="Container">
+    <form className="Container" onSubmit={submitData} >
       {!display && (
         <div className="Form Add__Expence">
           <Button
@@ -52,37 +88,44 @@ function App() {
             sborder="0"
             handleClick={handleClick}
           />
+          
         </div>
       )}
       {display && (
         <div className="Form">
           <div className="Form__input">
             <Input
-              value={values.title}
+              value={title}
               name="Title"
               type="text"
               maxlength="25"
-              handleSubmitExpDisplay={handleSubmitExpDisplay}
+              handleSubmitExpDisplay={(e) => {
+                setTitle(e.target.value);
+              }}
             />
             <Input
-              handleNumChange={handleNumChange}
+              // handleNumChange={handleNumChange}
               value={amount}
               name="Amount"
               type="number"
               step="0.01"
-              handleSubmitExpDisplay={handleSubmitExpDisplay}
+              handleSubmitExpDisplay={(e) => {
+                const limit = 10    ;
+                setAmount(e.target.value.slice(0, limit));
+
+              }}
             />
             <Input
-              value={values.date}
-               name="Date"
-
-              handleSubmitExpDisplay={handleSubmitExpDisplay}
+              value={date}
+              name="Date"
+              handleSubmitExpDisplay={(e) => {
+                setDate(e.target.value);
+              }}
               type="date"
             />
           </div>
           <div className="Form__button"
-          //  onSubmit={submitHandle}
-           >
+          >
             <Button
               name="Cancel"
               bgColor="unset"
@@ -98,28 +141,34 @@ function App() {
               bdRadius="5"
               type="submit"
               handleClick={() => {
-                handleSubmitExpense()
-                // if (!displayExpense) {
-                //   handleSubmitExpense();
-                // }
+                if (!displayExpense) {
+                  
+                  handleSubmitExpense();
+                }
               }}
             />
           </div>
         </div>
       )}
-      {/* {displayExpense && (
+      {
+        displayExpense && 
+        (
         <div className="Detail">
-          <DetailExpence
-            // month={values.date.getMonth()}
-            // year={values.date.getFullYear()}
-            // date={values.date.getDate()}
-            amount={values.amount}
-            title={values.title}
-          />
-        </div>
-      )} */}
-    </div>
+          {newExpense.map((value, index) => {
+            return (
+              <DetailExpence
+                month={stringMonth(value.date.slice(5,7))}
+                year={value.date.slice(0,4)}
+                date={value.date.slice(8,10)}
+                key={index}
+                amount={value.amount}
+                title={value.title}
+              />
+            )
+          })}
+        </div>)
+      }
+    </form>
   );
 }
-
 export default App;

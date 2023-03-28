@@ -4,7 +4,6 @@ function Button(props) {
   return (
     <div className="Add">
       <button
-        // onSubmit={props.onSubmit}
         onClick={props.handleClick}
         type={props.type}
         style={{

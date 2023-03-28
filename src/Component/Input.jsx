@@ -11,7 +11,7 @@ function Input(props) {
         <label
           style={
             {
-              // paddingLeft: 10,
+             
             }
           }
         >
@@ -19,8 +19,8 @@ function Input(props) {
         </label>
       </div>
       <input
-        // onChange={props.handleSubmitExpDisplay}
-        onChange={props.handleNumChange}
+        onChange={props.handleSubmitExpDisplay}
+     
         type={props.type}
         name={props.value}
         maxLength={props.maxlength}
