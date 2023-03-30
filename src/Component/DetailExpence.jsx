@@ -4,7 +4,8 @@ import Button from "./Button";
 function DetailExpence(props) {
   return (
     <div
-      style={{
+      onClick={props.onClick}  
+    style={{
         display: "flex",
         paddingTop: 10,
         backgroundColor: "#373737",
@@ -38,9 +39,9 @@ function DetailExpence(props) {
           }}
         >
           <div>
-            <b >{props.month}</b>
+            <b>{props.month}</b>
           </div>
-          <div >{props.year}</div>
+          <div>{props.year}</div>
           <div
             style={{
               fontSize: 30,
@@ -57,7 +58,7 @@ function DetailExpence(props) {
             marginLeft: 20,
           }}
         >
-          <b >{props.title}</b>
+          <b>{props.title}</b>
         </div>
       </div>
       <div>

@@ -3,6 +3,7 @@ import Input from "./Component/Input";
 import Button from "./Component/Button";
 import { useState } from "react";
 import DetailExpence from "./Component/DetailExpence";
+import FilterYear from "./Component/FilterYear";
 
 function App() {
   const [display, setDisplay] = useState(false);
@@ -12,73 +13,87 @@ function App() {
   const [amount, setAmount] = useState("");
   const [date, setDate] = useState("");
   const [newExpense, setNewExpense] = useState([]);
+  const [filterYearEx, setFilterYearEx] = useState(newExpense);
 
   const handleClick = () => {
     setDisplay(!display);
   };
 
   const handleSubmitExpense = () => {
-
-    
-
     setDisplayExpense(!displayExpense);
-    
   };
 
-
   const submitData = (e) => {
-   
     e.preventDefault();
-    if(title === '' || amount === '' || date === ''){
-      alert("Please enter full information")
-      return
+    if (title === "" || amount === "" || date === "") {
+      alert("Please enter full information");
+      return;
     }
     const newData = { title, amount, date };
+    setFilterYearEx([newData])
 
-   
-
-    
     setTitle("");
     setAmount("");
     setDate("");
-
     setNewExpense([...newExpense, newData]);
-    console.log(newExpense)
   };
 
   const stringMonth = (date) => {
-    var month = ''
-      switch(date){
-        case '01': month = "January";
-            break;
-        case '02': month = "February";
-            break;
-        case '03': month = "March";
-            break;
-        case '04': month = "April";
-            break;
-        case '05': month = "May";
-            break;
-        case '06': month = "June"; 
-            break;
-        case '07': month = "July";
-            break;
-        case '08': month = "August";
-            break;
-        case '09': month = "September";
-            break;
-        case '10': month = "October";
-            break;
-        case '11': month = "November";
-            break;
-        case '12': month = "December";
-            break;
-      }
-      return month;
-  }
-  
+    var month = "";
+    switch (date) {
+      case "01":
+        month = "January";
+        break;
+      case "02":
+        month = "February";
+        break;
+      case "03":
+        month = "March";
+        break;
+      case "04":
+        month = "April";
+        break;
+      case "05":
+        month = "May";
+        break;
+      case "06":
+        month = "June";
+        break;
+      case "07":
+        month = "July";
+        break;
+      case "08":
+        month = "August";
+        break;
+      case "09":
+        month = "September";
+        break;
+      case "10":
+        month = "October";
+        break;
+      case "11":
+        month = "November";
+        break;
+      case "12":
+        month = "December";
+        break;
+      default:
+        month = "";
+    }
+    return month;
+  };
+
+  const filterYear = (e) => {
+    const selectFilter = newExpense.filter((value, index) => {
+      return value.date.slice(0, 4) === e.target.value;
+    });
+    // console.log(selectFilter);
+    setFilterYearEx(selectFilter);
+    console.log(filterYearEx);
+  };
+  // };
   return (
-    <form className="Container" onSubmit={submitData} >
+    <form className="Container" onSubmit={submitData}>
       {!display && (
         <div className="Form Add__Expence">
           <Button
@@ -88,7 +103,6 @@ function App() {
             sborder="0"
             handleClick={handleClick}
           />
-          
         </div>
       )}
       {display && (
@@ -110,9 +124,8 @@ function App() {
               type="number"
               step="0.01"
               handleSubmitExpDisplay={(e) => {
-                const limit = 10    ;
+                const limit = 10;
                 setAmount(e.target.value.slice(0, limit));
-
               }}
             />
             <Input
@@ -124,8 +137,7 @@ function App() {
               type="date"
             />
           </div>
-          <div className="Form__button"
-          >
+          <div className="Form__button">
             <Button
               name="Cancel"
               bgColor="unset"
@@ -142,7 +154,6 @@ function App() {
               type="submit"
               handleClick={() => {
                 if (!displayExpense) {
-                  
                   handleSubmitExpense();
                 }
               }}
@@ -150,25 +161,28 @@ function App() {
           </div>
         </div>
       )}
-      {
-        displayExpense && 
-        (
+      {displayExpense && (
         <div className="Detail">
-          {newExpense.map((value, index) => {
+          <FilterYear detailDate={newExpense} onClick={filterYear} />
+
+          {filterYearEx.map((value, index) => {
             return (
-              <DetailExpence
-                month={stringMonth(value.date.slice(5,7))}
-                year={value.date.slice(0,4)}
-                date={value.date.slice(8,10)}
-                key={index}
-                amount={value.amount}
-                title={value.title}
-              />
-            )
+              <>
+                <DetailExpence
+                  month={stringMonth(value.date.slice(5, 7))}
+                  year={value.date.slice(0, 4)}
+                  date={value.date.slice(8, 10)}
+                  key={index}
+                  amount={value.amount}
+                  title={value.title}
+                />
+              </>
+            );
           })}
-        </div>)
-      }
+        </div>
+      )}
     </form>
   );
 }
+
 export default App;
