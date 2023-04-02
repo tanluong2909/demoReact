@@ -1,0 +1,86 @@
+:root{
+  --value: 100%;
+}
+
+body {
+  width: 100%;
+  height: 100%;
+  background-color: #373737;
+}
+
+.Form {
+  display: flex;
+  margin: auto;
+  height: 280px;
+  width: 50%;
+  margin-top: 20px;
+  background-color: #9c86e6;
+  border-radius: 15px;
+  flex-direction: column;
+}
+
+.Add__Expense {
+  height: 100px;
+}
+
+.Add__Expense .Add {
+  display: flex;
+  margin: auto;
+}
+.Form__input {
+  display: flex;
+  height: 180px;
+  width: 100%;
+  flex-wrap: wrap;
+}
+
+.Form__button {
+  display: flex;
+  justify-content: flex-end;
+  padding: 20px;
+}
+
+button:hover {
+  opacity: 0.8;
+}
+
+.Detail {
+  display: flex;
+  margin: auto;
+  height: 100%;
+  width: 50%;
+  margin-top: 50px;
+  background-color: #1d1d1d;
+  border-radius: 15px;
+  margin-top: 30px;
+  flex-direction: column;
+}
+
+/* .slideBarUp{
+  animation: .5s Up
+}
+
+.slideBarDown{
+  animation: .5s Down
+}
+
+
+@keyframes Down {
+  
+  100%{
+    height: 0;
+  }
+  0%{
+    height: var(--value);
+  }
+}
+@keyframes Up {
+  
+  0%{
+    height: 0;
+  }
+  100%{
+    height: var(--value);
+  }
+  
+} */
