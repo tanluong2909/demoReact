@@ -38,14 +38,13 @@ function App() {
     setDate("");
     setNewExpense([...newExpense, newData]);
     setNewdata(newData);
-    // console.log(newdata);
-    // setFilterYearEx([...filterYearEx, newData]);
+
     const submitByYear = newExpense.filter((value, index) => {
       return value.date.slice(0, 4) === date.slice(0, 4);
     });
 
     setFilterYearEx([...submitByYear, newData]);
-    // setFilterYearEx(submitByYear);
+
   };
 
   const stringMonth = (date) => {

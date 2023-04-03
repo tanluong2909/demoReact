@@ -55,32 +55,3 @@ button:hover {
   margin-top: 30px;
   flex-direction: column;
 }
-
-/* .slideBarUp{
-  animation: .5s Up
-}
-
-.slideBarDown{
-  animation: .5s Down
-}
-
-
-@keyframes Down {
-  
-  100%{
-    height: 0;
-  }
-  0%{
-    height: var(--value);
-  }
-}
-@keyframes Up {
-  
-  0%{
-    height: 0;
-  }
-  100%{
-    height: var(--value);
-  }
-  
-} */
