@@ -8,19 +8,12 @@ function Input(props) {
       }}
     >
       <div>
-        <label
-          style={
-            {
-             
-            }
-          }
-        >
+        <label>
           <b>{props.name}</b>
         </label>
       </div>
       <input
         onChange={props.handleSubmitExpDisplay}
-     
         type={props.type}
         name={props.value}
         maxLength={props.maxlength}
