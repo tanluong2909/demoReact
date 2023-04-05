@@ -35,21 +35,25 @@ function FilterYear(props) {
         }}
         onChange={props.onClick}
       >
-        {
-          props.detailDate.forEach((element) => {
-            if (!arrYear.includes(element.date.slice(0, 4))) {
-              arrYear.push(element.date.slice(0, 4));
-            }
-            return arrYear
-          })
-        }
-        
-        {arrYear.sort().map((value, i) => {
-          return <option key={i} 
-          selected={value === props.input.date.slice(0, 4)  ? true : false}>
-            {value}</option>;
+        {props.detailDate.forEach((element) => {
+          if (!arrYear.includes(element.objDate.getFullYear())) {
+            arrYear.push(element.objDate.getFullYear());
+          }
+          return arrYear;
         })}
-  
+
+        {arrYear.sort().map((value, i) => {
+          return (
+            <option
+              key={i}
+              selected={
+                value === props.input.objDate.getFullYear() ? true : false
+              }
+            >
+              {value}
+            </option>
+          );
+        })}
       </select>
     </div>
   );

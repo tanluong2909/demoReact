@@ -2,7 +2,7 @@ import React from "react";
 
 function Button(props) {
   return (
-    <div className="Add">
+    <div className="add">
       <button
         onClick={props.handleClick}
         type={props.type}
@@ -12,10 +12,9 @@ function Button(props) {
           padding: 15,
           paddingLeft: 35,
           paddingRight: 35,
-
           fontSize: 20,
           border: props.sborder,
-          marginRight: 15,
+          marginRight: 10,
           color: props.fcolor,
           fontWeight: props.fWeight,
           cursor: "pointer",

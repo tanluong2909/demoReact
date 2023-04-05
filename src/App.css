@@ -1,4 +1,4 @@
-:root{
+:root {
   --value: 100%;
 }
 
@@ -8,10 +8,10 @@ body {
   background-color: #373737;
 }
 
-.Form {
+.container__form {
   display: flex;
   margin: auto;
-  height: 280px;
+  height: 100%;
   width: 50%;
   margin-top: 20px;
   background-color: #9c86e6;
@@ -19,22 +19,24 @@ body {
   flex-direction: column;
 }
 
-.Add__Expense {
+.add__expense {
+  display: flex;
+  margin: auto;
   height: 100px;
 }
 
-.Add__Expense .Add {
+.add__expense .add {
   display: flex;
   margin: auto;
 }
-.Form__input {
+.form__input {
   display: flex;
-  height: 180px;
+  height: 100%;
   width: 100%;
   flex-wrap: wrap;
 }
 
-.Form__button {
+.form__button {
   display: flex;
   justify-content: flex-end;
   padding: 20px;
@@ -44,7 +46,7 @@ button:hover {
   opacity: 0.8;
 }
 
-.Detail {
+.detail {
   display: flex;
   margin: auto;
   height: 100%;
@@ -54,4 +56,48 @@ button:hover {
   border-radius: 15px;
   margin-top: 30px;
   flex-direction: column;
+}
+input:focus {
+  outline: black solid 2px !important;
+}
+
+label::after {
+  content: " *";
+  color: rgb(241, 0, 0);
+}
+
+.statistic {
+  display: flex;
+  margin: 15px 15px 5px;
+  background-color: rgb(247, 219, 250);
+  width: 95%;
+  height: 180px;
+  border-radius: 15px;
+  align-items: center;
+}
+
+.statistic__month {
+  background-color: rgb(187, 171, 239);
+  height: 80%;
+  width: 15px;
+  border-radius: 20px;
+  margin-left: 40px;
+  border: 1px solid black;
+  position: relative;
+}
+
+.statistic__month .transition {
+  background-color: rgb(61, 33, 167);
+  width: 15px;
+  border-radius: 20px;
+  bottom: 0px;
+  border: 0px solid black;
+  position: absolute;
+  transition: height 500ms ease-in-out 0s;
+}
+
+.statistic__month .title {
+  position: absolute;
+  margin-top: 145px;
+  font-size: 10px;
 }

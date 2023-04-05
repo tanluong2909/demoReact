@@ -1,21 +1,23 @@
 import React from "react";
 import Button from "./Button";
-
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faXmark } from "@fortawesome/free-solid-svg-icons";
 function DetailExpence(props) {
   return (
     <div
-      onClick={props.onClick}  
-    style={{
+      onClick={props.onClick}
+      style={{
         display: "flex",
         paddingTop: 10,
         backgroundColor: "#373737",
         color: "white",
         margin: 15,
-        marginTop: 10 ,
+        marginTop: 10,
         borderRadius: "15px",
         alignItems: "center",
         width: "95%",
         justifyContent: "space-between",
+        position: "relative",
       }}
     >
       <div
@@ -76,6 +78,16 @@ function DetailExpence(props) {
           />
         </b>
       </div>
+      <FontAwesomeIcon
+        style={{
+          position: "absolute",
+          right: 5,
+          top: 5,
+          color: "white",
+          cursor: "pointer",
+        }}
+        icon={faXmark}
+      />
     </div>
   );
 }

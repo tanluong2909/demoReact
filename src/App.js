@@ -20,6 +20,9 @@ function App() {
 
   const handleClick = () => {
     setDisplay(!display);
+    setTitle("");
+    setAmount("");
+    setDate("");
   };
 
   const handleSubmitExpense = () => {
@@ -32,77 +35,35 @@ function App() {
       alert("Please enter full information");
       return;
     }
-    const newData = { title, amount, date };
+    const objDate = new Date(date);
+
+    const newData = { title, amount, objDate };
     setTitle("");
     setAmount("");
     setDate("");
     setNewExpense([...newExpense, newData]);
     setNewdata(newData);
 
-    const submitByYear = newExpense.filter((value, index) => {
-      return value.date.slice(0, 4) === date.slice(0, 4);
-    });
-
-    setFilterYearEx([...submitByYear, newData]);
-
-  };
-
-  const stringMonth = (date) => {
-    var month = "";
-    switch (date) {
-      case "01":
-        month = "January";
-        break;
-      case "02":
-        month = "February";
-        break;
-      case "03":
-        month = "March";
-        break;
-      case "04":
-        month = "April";
-        break;
-      case "05":
-        month = "May";
-        break;
-      case "06":
-        month = "June";
-        break;
-      case "07":
-        month = "July";
-        break;
-      case "08":
-        month = "August";
-        break;
-      case "09":
-        month = "September";
-        break;
-      case "10":
-        month = "October";
-        break;
-      case "11":
-        month = "November";
-        break;
-      case "12":
-        month = "December";
-        break;
-      default:
-        month = "";
-    }
-    return month;
+    setFilterYearEx([
+      ...newExpense.filter((value) => {
+        return value.objDate.getFullYear() === objDate.getFullYear();
+      }),
+      newData,
+    ]);
   };
 
   const filterYear = (e) => {
-    const selectFilter = newExpense.filter((value, index) => {
-      return value.date.slice(0, 4) === e.target.value;
-    });
-    setFilterYearEx(selectFilter);
+    setFilterYearEx(
+      newExpense.filter((value) => {
+        return value.objDate.getFullYear() === parseInt(e.target.value);
+      })
+    );
   };
 
   return (
-    <form className="Container" onSubmit={submitData}>
+    <form className="container" onSubmit={submitData}>
       {!display && (
-        <div className="Form Add__Expense">
+        <div className="container__form add__expense">
           <Button
             name="Add New Expense"
             bgColor="#37004f"
@@ -113,13 +74,14 @@ function App() {
         </div>
       )}
       {display && (
-        <div className="Form">
-          <div className="Form__input">
+        <div className="container__form">
+          <div className="form__input">
             <Input
               value={title}
               name="Title"
               type="text"
               maxlength="25"
+              width="300px"
               handleSubmitExpDisplay={(e) => {
                 setTitle(e.target.value);
               }}
@@ -129,6 +91,7 @@ function App() {
               name="Amount"
               type="number"
               step="0.01"
+              width="300px"
               handleSubmitExpDisplay={(e) => {
                 const limit = 10;
                 setAmount(e.target.value.slice(0, limit));
@@ -141,9 +104,11 @@ function App() {
                 setDate(e.target.value);
               }}
               type="date"
+              padding="10px"
+              width="284px"
             />
           </div>
-          <div className="Form__button">
+          <div className="form__button">
             <Button
               name="Cancel"
               bgColor="unset"
@@ -168,7 +133,7 @@ function App() {
         </div>
       )}
       {displayExpense && (
-        <div className="Detail">
+        <div className="detail">
           <FilterYear
             detailDate={newExpense}
             input={newdata}
@@ -179,9 +144,11 @@ function App() {
             return (
               <>
                 <DetailExpence
-                  month={stringMonth(value.date.slice(5, 7))}
-                  year={value.date.slice(0, 4)}
-                  date={value.date.slice(8, 10)}
+                  month={value.objDate.toLocaleString(["en-US"], {
+                    month: "long",
+                  })}
+                  year={value.objDate.getFullYear()}
+                  date={value.objDate.getDate()}
                   key={index}
                   amount={value.amount}
                   title={value.title}

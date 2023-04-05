@@ -23,11 +23,13 @@ function Input(props) {
         style={{
           color: "black",
           minHeight: 40,
-          minWidth: 300,
           borderRadius: 5,
           fontSize: 18,
           marginTop: 10,
           border: 0,
+          paddingLeft: props.padding,
+          paddingRight: props.padding,
+          width: props.width,
         }}
       />
     </div>
