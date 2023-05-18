@@ -8,19 +8,13 @@ function Input(props) {
       }}
     >
       <div>
-        <label
-          style={
-            {
-             
-            }
-          }
-        >
+        <label>
           <b>{props.name}</b>
         </label>
       </div>
       <input
+      className={'form__input-' + `${props.name}`}
         onChange={props.handleSubmitExpDisplay}
-     
         type={props.type}
         name={props.value}
         maxLength={props.maxlength}
@@ -30,12 +24,15 @@ function Input(props) {
         style={{
           color: "black",
           minHeight: 40,
-          minWidth: 300,
           borderRadius: 5,
           fontSize: 18,
           marginTop: 10,
           border: 0,
+          paddingLeft: props.padding,
+          paddingRight: props.padding,
+          width: props.width,
         }}
+        onClick={props.onClick}
       />
     </div>
   );

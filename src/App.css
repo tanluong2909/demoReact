@@ -1,36 +1,42 @@
+:root {
+  --value: 100%;
+}
+
 body {
   width: 100%;
   height: 100%;
   background-color: #373737;
 }
 
-.Form {
+.container__form {
   display: flex;
   margin: auto;
-  height: 280px;
+  height: 100%;
   width: 50%;
-  margin-top: 50px;
+  margin-top: 20px;
   background-color: #9c86e6;
   border-radius: 15px;
   flex-direction: column;
 }
 
-.Add__Expence {
+.add__expense {
+  display: flex;
+  margin: auto;
   height: 100px;
 }
 
-.Add__Expence .Add {
+.add__expense .add {
   display: flex;
   margin: auto;
 }
-.Form__input {
+.form__input {
   display: flex;
-  height: 180px;
+  height: 100%;
   width: 100%;
   flex-wrap: wrap;
 }
 
-.Form__button {
+.form__button {
   display: flex;
   justify-content: flex-end;
   padding: 20px;
@@ -40,7 +46,7 @@ button:hover {
   opacity: 0.8;
 }
 
-.Detail {
+.container__detail {
   display: flex;
   margin: auto;
   height: 100%;
@@ -51,3 +57,130 @@ button:hover {
   margin-top: 30px;
   flex-direction: column;
 }
+input:focus {
+  outline: black solid 2px ;
+}
+
+label::after {
+  content: " *";
+  color: rgb(241, 0, 0);
+}
+
+.detail__statistic {
+  display: flex;
+  margin: 15px 15px 5px;
+  background-color: rgb(247, 219, 250);
+  width: 95%;
+  height: 180px;
+  border-radius: 15px;
+  align-items: center;
+}
+
+.statistic__month {
+  background-color: rgb(187, 171, 239);
+  height: 80%;
+  width: 15px;
+  border-radius: 20px;
+  margin: auto;
+  border: 1px solid black;
+  position: relative;
+}
+
+.statistic__month .transition {
+  background-color: rgb(61, 33, 167);
+  width: 15px;
+  border-radius: 20px;
+  bottom: 0px;
+  border: 0px solid black;
+  position: absolute;
+  transition: height 500ms ease-in-out 0s;
+}
+
+.statistic__month .title {
+  position: absolute;
+  margin-top: 145px;
+  font-size: 10px;
+}
+
+.style__input{
+  outline: 1px solid red;
+}
+
+/* Extra small devices (phones, 600px and down) */
+@media only screen and (max-width: 600px) {
+  .container__form {
+    width: 92%;
+    margin: 20px;
+  }
+  .container__detail {
+    width: 92%;
+    margin: 20px;
+  }
+  .form__button{
+    padding: 5px;
+  }
+  select{
+    width: 150px !important;
+  }
+  .statistic__output{
+    font-size: 12px !important;
+  }
+  .output__amount{
+    position: absolute;
+    right: 10px;
+  }
+  .add button{  
+    font-size: 16px !important;
+    padding: 12px !important ;
+  }
+  .output__title{
+    font-size: 14px !important;
+  }
+}
+
+/* Small devices (portrait tablets and large phones, 600px and up) */
+@media only screen and (min-width: 600px) {
+  .container__form {
+    width: 90%;
+  }
+  .container__detail {
+    width: 90%;
+  }
+  .output__title{
+    font-size: 14px !important;
+  }
+}
+
+/* Medium devices (landscape tablets, 768px and up) */
+@media only screen and (min-width: 768px) {
+  .container__form {
+    width: 80%;
+  }
+  .container__detail {
+    width: 80%;
+  }
+  .output__title{
+    font-size: 20px !important;
+  }
+}
+
+/* Large devices (laptops/desktops, 992px and up) */
+@media only screen and (min-width: 992px) {
+  .container__form {
+    width: 70%;
+  }
+  .container__detail {
+    width: 70%;
+  }
+}
+
+/* Extra large devices (large laptops and desktops, 1200px and up) */
+@media only screen and (min-width: 1200px) {
+  .container__form {
+    width: 50%;
+  }
+  .container__detail {
+    width: 50%;
+  }
+}
+

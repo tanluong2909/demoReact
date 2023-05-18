@@ -4,6 +4,7 @@ import Button from "./Component/Button";
 import { useState } from "react";
 import DetailExpence from "./Component/DetailExpence";
 import FilterYear from "./Component/FilterYear";
+import ExpenseStatistic from "./Component/ExpenseStatistic";
 
 function App() {
   const [display, setDisplay] = useState(false);
@@ -13,91 +14,111 @@ function App() {
   const [amount, setAmount] = useState("");
   const [date, setDate] = useState("");
   const [newExpense, setNewExpense] = useState([]);
-  const [filterYearEx, setFilterYearEx] = useState(newExpense);
+  const [newdata, setNewdata] = useState({});
+
+  const [selectYear, setSelectYear] = useState("");
 
   const handleClick = () => {
     setDisplay(!display);
+    setTitle("");
+    setAmount("");
+    setDate("");
   };
 
   const handleSubmitExpense = () => {
     setDisplayExpense(!displayExpense);
   };
 
+  const filterYearExpense = (year) => {
+    const data = newExpense.filter((value) => {
+      return value.objDate.getFullYear() === parseInt(year);
+    });
+    return data;
+  };
+
   const submitData = (e) => {
     e.preventDefault();
     if (title === "" || amount === "" || date === "") {
       alert("Please enter full information");
+      checkInput();
       return;
     }
-    const newData = { title, amount, date };
-    setFilterYearEx([newData])
-
+    removeClass();
+    const objDate = new Date(date);
+    const today = new Date();
+    const newData = { title, amount, objDate };
+    newData.id = `expense-${today.getTime()}`;
     setTitle("");
     setAmount("");
     setDate("");
     setNewExpense([...newExpense, newData]);
-  };
-
-  const stringMonth = (date) => {
-    var month = "";
-    switch (date) {
-      case "01":
-        month = "January";
-        break;
-      case "02":
-        month = "February";
-        break;
-      case "03":
-        month = "March";
-        break;
-      case "04":
-        month = "April";
-        break;
-      case "05":
-        month = "May";
-        break;
-      case "06":
-        month = "June";
-        break;
-      case "07":
-        month = "July";
-        break;
-      case "08":
-        month = "August";
-        break;
-      case "09":
-        month = "September";
-        break;
-      case "10":
-        month = "October";
-        break;
-      case "11":
-        month = "November";
-        break;
-      case "12":
-        month = "December";
-        break;
-      default:
-        month = "";
-    }
-    return month;
+    setNewdata(newData);
+    setSelectYear(newData.objDate.getFullYear());
   };
 
   const filterYear = (e) => {
-    const selectFilter = newExpense.filter((value, index) => {
-      return value.date.slice(0, 4) === e.target.value;
-    });
-    // console.log(selectFilter);
-    setFilterYearEx(selectFilter);
-    console.log(filterYearEx);
+    setSelectYear(e.target.value);
   };
-  // };
+
+  const checkInputTitle = () => {
+    const titleInput = document.querySelector(".form__input-Title");
+    titleInput.classList.add("style__input");
+  };
+
+  const checkInputAmount = () => {
+    const amountInput = document.querySelector(".form__input-Amount");
+    amountInput.classList.add("style__input");
+  };
+
+  const checkInputDate = () => {
+    const dateInput = document.querySelector(".form__input-Date");
+    dateInput.classList.add("style__input");
+  };
+
+  const checkInput = () => {
+    if (title === "") {
+      checkInputTitle();
+    }
+    if (amount === "") {
+      checkInputAmount();
+    }
+    if (date === "") {
+      checkInputDate();
+    }
+  };
+  const removeClass = () => {
+    const titleInput = document.querySelector(".form__input-Title");
+    titleInput.classList.remove("style__input");
+    const amountInput = document.querySelector(".form__input-Amount");
+    amountInput.classList.remove("style__input");
+    const dateInput = document.querySelector(".form__input-Date");
+    dateInput.classList.remove("style__input");
+  };
+
+  const handleRemove = (id, year) => {
+    let expense = newExpense.filter((item) => item.id !== id);
+    setNewExpense(expense);
+    setSelectYear(
+      expense.filter((value) => {
+        return value.objDate.getFullYear() === year;
+      })
+    );
+  };
+
+
+  const year = newExpense.map((year) => {
+    return year.objDate.getFullYear();
+  })
+  const resultYear = () => {
+    return newExpense.filter((value) => {return value.objDate.getFullYear() === Math.max(...year)})
+  };
+
   return (
-    <form className="Container" onSubmit={submitData}>
+    <form className="container" onSubmit={submitData}>
       {!display && (
-        <div className="Form Add__Expence">
+        <div className="container__form add__expense">
           <Button
-            name="Add New Expence"
+            name="Add New Expense"
             bgColor="#37004f"
             fcolor="white"
             sborder="0"
@@ -106,38 +127,44 @@ function App() {
         </div>
       )}
       {display && (
-        <div className="Form">
-          <div className="Form__input">
+        <div className="container__form">
+          <div className="form__input">
             <Input
               value={title}
               name="Title"
               type="text"
               maxlength="25"
+              width="300px"
               handleSubmitExpDisplay={(e) => {
                 setTitle(e.target.value);
               }}
+              onClick={removeClass}
             />
             <Input
-              // handleNumChange={handleNumChange}
               value={amount}
               name="Amount"
               type="number"
               step="0.01"
+              width="300px"
               handleSubmitExpDisplay={(e) => {
                 const limit = 10;
                 setAmount(e.target.value.slice(0, limit));
               }}
+              onClick={removeClass}
             />
             <Input
               value={date}
               name="Date"
+              type="date"
+              padding="10px"
+              width="284px"
               handleSubmitExpDisplay={(e) => {
                 setDate(e.target.value);
               }}
-              type="date"
+              onClick={removeClass}
             />
           </div>
-          <div className="Form__button">
+          <div className="form__button">
             <Button
               name="Cancel"
               bgColor="unset"
@@ -146,7 +173,7 @@ function App() {
               handleClick={handleClick}
             />
             <Button
-              name="Add Expence"
+              name="Add Expense"
               bgColor="#37004f"
               fcolor="white"
               sborder="0"
@@ -162,23 +189,36 @@ function App() {
         </div>
       )}
       {displayExpense && (
-        <div className="Detail">
-          <FilterYear detailDate={newExpense} onClick={filterYear} />
-
-          {filterYearEx.map((value, index) => {
-            return (
-              <>
-                <DetailExpence
-                  month={stringMonth(value.date.slice(5, 7))}
-                  year={value.date.slice(0, 4)}
-                  date={value.date.slice(8, 10)}
-                  key={index}
-                  amount={value.amount}
-                  title={value.title}
-                />
-              </>
-            );
-          })}
+        <div className="container__detail">
+          <FilterYear
+            detailDate={newExpense}
+            input={newdata}
+            onClick={filterYear}
+          />
+          <ExpenseStatistic
+            data={
+              filterYearExpense(selectYear).length > 0
+                ? filterYearExpense(selectYear)
+                : resultYear()
+            }
+            onChange={filterYear}
+          />
+          {(filterYearExpense(selectYear).length > 0
+            ? filterYearExpense(selectYear)
+            : resultYear()
+          )
+            .sort((a, b) => a.objDate - b.objDate)
+            .map((value, index) => {
+              return (
+                <>
+                  <DetailExpence
+                    data={value}
+                    key={index}
+                    handleRemove={handleRemove}
+                  />
+                </>
+              );
+            })}
         </div>
       )}
     </form>

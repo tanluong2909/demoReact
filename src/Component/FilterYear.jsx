@@ -1,12 +1,8 @@
 import React from "react";
 
 function FilterYear(props) {
-    
-    // const filteredArr = props.detailDate.date.filter((year, index) => {
-    //     return props.detailDate.date.indexOf(year) === index;
-    // })
+  const arrYear = [];
 
-    // console.log(filteredArr)
   return (
     <div
       style={{
@@ -39,8 +35,24 @@ function FilterYear(props) {
         }}
         onChange={props.onClick}
       >
-        {props.detailDate.map((value, i) => {
-          return <option key={i} selected>{value.date.slice(0, 4)}</option>;
+        {props.detailDate.forEach((element) => {
+          if (!arrYear.includes(element.objDate.getFullYear())) {
+            arrYear.push(element.objDate.getFullYear());
+          }
+          return arrYear;
+        })}
+
+        {arrYear.sort().map((value, i) => {
+          return (
+            <option
+              key={i}
+              selected={
+                value === props.input.objDate.getFullYear() ? true : false
+              }
+            >
+              {value}
+            </option>
+          );
         })}
       </select>
     </div>
