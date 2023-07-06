@@ -5,6 +5,7 @@ import { faXmark } from "@fortawesome/free-solid-svg-icons";
 function DetailExpence(props) {
   return (
     <div
+      className="statistic__output"
       onClick={props.onClick}
       style={{
         display: "flex",
@@ -55,6 +56,7 @@ function DetailExpence(props) {
           </div>
         </div>
         <div
+          className="output__title"
           style={{
             fontSize: 20,
             fontWeight: "bold",
@@ -64,7 +66,7 @@ function DetailExpence(props) {
           <b>{props.title}</b>
         </div>
       </div>
-      <div>
+      <div className="output__amount">
         <b>
           <Button
             name={"$ " + props.amount}
@@ -87,6 +89,7 @@ function DetailExpence(props) {
           cursor: "pointer",
         }}
         icon={faXmark}
+        onClick={() => props.handleRemove(props.id, props.year)}
       />
     </div>
   );

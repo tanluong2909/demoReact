@@ -51,7 +51,7 @@ function Expensestatistic(props) {
   };
 
   return (
-    <div className="statistic">
+    <div className="detail__statistic">
       {month.map((item, index) => (
         <div className="statistic__month">
           <div

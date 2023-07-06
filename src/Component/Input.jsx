@@ -13,6 +13,7 @@ function Input(props) {
         </label>
       </div>
       <input
+      className={'form__input-' + `${props.name}`}
         onChange={props.handleSubmitExpDisplay}
         type={props.type}
         name={props.value}
@@ -31,6 +32,7 @@ function Input(props) {
           paddingRight: props.padding,
           width: props.width,
         }}
+        onClick={props.onClick}
       />
     </div>
   );

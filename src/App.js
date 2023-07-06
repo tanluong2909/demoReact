@@ -33,11 +33,14 @@ function App() {
     e.preventDefault();
     if (title === "" || amount === "" || date === "") {
       alert("Please enter full information");
+      checkInput();
       return;
     }
+    removeClass();
     const objDate = new Date(date);
-
+    const today = new Date();
     const newData = { title, amount, objDate };
+    newData.id = `expense-${today.getTime()}`;
     setTitle("");
     setAmount("");
     setDate("");
@@ -60,6 +63,52 @@ function App() {
     );
   };
 
+  const checkInputTitle = () => {
+    const titleInput = document.querySelector(".form__input-Title");
+    titleInput.classList.add("style__input");
+  };
+
+  const checkInputAmount = () => {
+    const amountInput = document.querySelector(".form__input-Amount");
+    amountInput.classList.add("style__input");
+  };
+
+  const checkInputDate = () => {
+    const dateInput = document.querySelector(".form__input-Date");
+    dateInput.classList.add("style__input");
+  };
+
+  const checkInput = () => {
+    if (title === "") {
+      checkInputTitle();
+    }
+    if (amount === "") {
+      checkInputAmount();
+    }
+    if (date === "") {
+      checkInputDate();
+    }
+  };
+  const removeClass = () => {
+    const titleInput = document.querySelector(".form__input-Title");
+    titleInput.classList.remove("style__input");
+    const amountInput = document.querySelector(".form__input-Amount");
+    amountInput.classList.remove("style__input");
+    const dateInput = document.querySelector(".form__input-Date");
+    dateInput.classList.remove("style__input");
+  };
+
+  const handleRemove = (id, year) => {
+    let expense = newExpense.filter((item) => item.id !== id);
+    setNewExpense(expense);
+    setFilterYearEx(
+      expense.filter((value) => {
+        return value.objDate.getFullYear() === year;
+      })
+    );
+  };
+
+ 
   return (
     <form className="container" onSubmit={submitData}>
       {!display && (
@@ -85,6 +134,7 @@ function App() {
               handleSubmitExpDisplay={(e) => {
                 setTitle(e.target.value);
               }}
+              onClick={removeClass}
             />
             <Input
               value={amount}
@@ -96,16 +146,18 @@ function App() {
                 const limit = 10;
                 setAmount(e.target.value.slice(0, limit));
               }}
+              onClick={removeClass}
             />
             <Input
               value={date}
               name="Date"
-              handleSubmitExpDisplay={(e) => {
-                setDate(e.target.value);
-              }}
               type="date"
               padding="10px"
               width="284px"
+              handleSubmitExpDisplay={(e) => {
+                setDate(e.target.value);
+              }}
+              onClick={removeClass}
             />
           </div>
           <div className="form__button">
@@ -133,29 +185,36 @@ function App() {
         </div>
       )}
       {displayExpense && (
-        <div className="detail">
+        <div className="container__detail">
           <FilterYear
             detailDate={newExpense}
             input={newdata}
             onClick={filterYear}
           />
-          <ExpenseStatistic data={filterYearEx} onChange={filterYear} />
-          {filterYearEx.map((value, index) => {
-            return (
-              <>
-                <DetailExpence
-                  month={value.objDate.toLocaleString(["en-US"], {
-                    month: "long",
-                  })}
-                  year={value.objDate.getFullYear()}
-                  date={value.objDate.getDate()}
-                  key={index}
-                  amount={value.amount}
-                  title={value.title}
-                />
-              </>
-            );
-          })}
+          <ExpenseStatistic
+            data={filterYearEx.length > 0 ? filterYearEx : newExpense}
+            onChange={filterYear}
+          />
+          {(filterYearEx.length > 0 ? filterYearEx : newExpense)
+            .sort((a, b) => a.objDate - b.objDate)
+            .map((value, index) => {
+              return (
+                <>
+                  <DetailExpence
+                    month={value.objDate.toLocaleString(["en-US"], {
+                      month: "long",
+                    })}
+                    year={value.objDate.getFullYear()}
+                    date={value.objDate.getDate()}
+                    key={index}
+                    amount={value.amount}
+                    title={value.title}
+                    id={value.id}
+                    handleRemove={handleRemove}
+                  />
+                </>
+              );
+            })}
         </div>
       )}
     </form>
